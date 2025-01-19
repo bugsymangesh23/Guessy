@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
+    <title>Guessy Game - Result</title>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded shadow-md text-center">
+        <h1 class="text-xl font-bold mb-4">{{ result }}</h1>
+        {% if clues %}
+            <div class="mt-4 text-lg">{{ clues|join:", " }}</div>
+        {% endif %}
+        <a href="{% url 'index' %}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded">Play Again</a>
+    </div>
+</body>
+</html>
+

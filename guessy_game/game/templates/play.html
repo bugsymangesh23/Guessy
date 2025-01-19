@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
+    <title>Guessy Game - Play</title>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded shadow-md">
+        <h1 class="text-xl font-bold mb-4">Make your guess!</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="guess" maxlength="3" required class="border p-2 rounded mb-4" placeholder="Enter your guess">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit Guess</button>
+        </form>
+        {% if clues %}
+            <div class="mt-4 text-lg">{{ clues|join:", " }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
