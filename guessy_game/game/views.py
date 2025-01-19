@@ -11,7 +11,7 @@ def get_secret_num():
 def index(request):
     if request.method == 'POST':
         # Start a new game
-        dsecret_number = get_secret_num()
+        secret_number = get_secret_num()
         Game.objects.create(secret_number=secret_number)
         return redirect('play')
 
@@ -24,7 +24,7 @@ def play(request):
         guess = request.POST.get('guess')
         clues = get_clues(guess, game.secret_number)
 
-        if guess = game.secret_number:
+        if guess == game.secret_number:
             return render(request, 'result.html', {'result': 'You got it!', 'clues': clues})
 
         game.guesses += 1
@@ -39,12 +39,17 @@ def play(request):
 
 def get_clues(guess, secret_number):
     """Retuens clues based on the player's guess."""
-    if guess[i] == secret_number[i]:
-        clues.append('Woza') # correct digit in correct position
-    elif guess[i] in secret_number:
-        clues.append('Chop rice!') # correct digit but wrong position
-        if not clues:
-            return ['Yooh!'] #No correct digits
+    if guess == secret_number:
+        return ['You got it!']
 
-        return clues
+    clues = []
+    for i in range(len(guess)):
+        if guess[i] == secret_number[i]:
+            clues.append('Woza') # correct digit in correct position
+        elif guess[i] in secret_number:
+            clues.append('Chop rice!') # correct digit but wrong position
+    if not clues:
+        return ['Yooh!'] #No correct digits
+
+    return clues
 
