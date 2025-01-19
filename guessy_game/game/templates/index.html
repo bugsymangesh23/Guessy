@@ -5,17 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
     <title>Guessy Game</title>
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <div class="bg-white p-8 rounded shadow-md">
         <h1 class="text-2xl font-bold mb-4">Welcome to Guessy!</h1>
+        
+        <!-- Button to open modal -->
+        <button id="instructionsButton" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">How to Play</button>
+
+        <!-- Instructions Modal -->
+        <div id="instructionsModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white p-6 rounded shadow-md w-1/3">
+                <h2 class="text-xl font-bold mb-2">How to Play</h2>
+                <p>I am thinking of a 3-digit number with no repeated digits. Try guessing what it is.</p>
+                <p>Here are the clues:</p>
+                <ul class="list-disc pl-5 mb-4">
+                    <li><strong>Chop_rice:</strong> One digit is correct but in the wrong position.</li>
+                    <li><strong>Woza:</strong> One digit is correct and in the right position.</li>
+                    <li><strong>Yooh:</strong> No digit is correct.</li>
+                </ul>
+                <p>Example: If the secret number was 123 and your guess was 421, the program would print: Woza Chop_rice.</p>
+                <button id="closeModal" class="bg-red-500 text-white px-4 py-2 rounded mt-4">Close</button>
+            </div>
+        </div>
+
         <form method="POST">
             {% csrf_token %}
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Start New Game</button>
         </form>
     </div>
+
+    <!-- JavaScript for Modal -->
+    <script>
+        const instructionsButton = document.getElementById('instructionsButton');
+        const instructionsModal = document.getElementById('instructionsModal');
+        const closeModal = document.getElementById('closeModal');
+
+        // Open modal
+        instructionsButton.onclick = function() {
+            instructionsModal.classList.remove('hidden');
+        };
+
+        // Close modal
+        closeModal.onclick = function() {
+            instructionsModal.classList.add('hidden');
+        };
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target === instructionsModal) {
+                instructionsModal.classList.add('hidden');
+            }
+        };
+    </script>
 </body>
 </html>
 
